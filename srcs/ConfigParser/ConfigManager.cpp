@@ -16,7 +16,36 @@ void ConfigManager::validateDirective(std::string &token)
     if(it == this->DirectiveParser.end())
         std::runtime_error("unknown directive " + Splited[0]);// throw exption for unknown directive 
     (this->*(it->second))(std::vector<std::string>(Splited.begin() + 1, Splited.end()));
-}   
+}
+
+void ConfigManager::dublictedServers(const std::vector<ConfigManager> &servers)
+{
+    if(this->_port.empty() || this->_host.empty() || this->_root.empty())
+        std::runtime_error("Missing Server requires configuration");
+    for (size_t i = 0; i < servers.size(); i++)
+    {
+        if (servers[i]._host == this->_host && servers[i]._port == this->_port)
+        {
+            const std::vector<std::string>&serverNames = servers[i]._serverName;
+            for (size_t j = 0; j < serverNames.size(); j++)
+            {
+                if(std::find(this->_serverName.begin(), this->_serverName.end(), serverNames[j]) != this->_serverName.end())
+                    std::runtime_error("Dublicated server name");
+            }
+        }
+    }
+    std::map<int, std::string>::iterator it = this->_errors.begin();
+    std::string path;
+    while(it != _errors.end())
+    {
+        path = it->second;
+        if (path[0] == '/')
+            path.erase(0,1);
+        path = _root + "/" + path;
+        it->second = path;
+        it++;
+    }
+}
 
 ConfigManager::~ConfigManager()
 {
@@ -94,8 +123,4 @@ void ConfigManager::validateErors(const std::vector<std::string>error_page)
         std::runtime_error("Bad usage of error_page");
     // we need to parse value code of error_page
     this->_errors[atoi(error_page[0]. c_str())] = error_page[1];
-}
-
-void ConfigManager::validateMaxBodySize(const std::vector<std::string>)
-{
 }

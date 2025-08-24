@@ -8,7 +8,6 @@
 #include "LocationHandler.hpp"
 
 
-	// static std::vector<std::string> SplitByDelimiter(const std::string &string, std::string &delimiter);
 
 int main()
 {
