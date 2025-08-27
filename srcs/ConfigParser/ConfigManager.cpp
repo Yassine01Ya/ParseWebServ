@@ -23,7 +23,7 @@ void ConfigManager::dublictedServers(const std::vector<ConfigManager> &servers)
     if(this->_port.empty() || this->_host.empty() || this->_root.empty())
         std::runtime_error("Missing Server requires configuration");
     for (size_t i = 0; i < servers.size(); i++)
-    {
+    {   
         if (servers[i]._host == this->_host && servers[i]._port == this->_port)
         {
             const std::vector<std::string>&serverNames = servers[i]._serverName;
@@ -58,7 +58,7 @@ void ConfigManager::initMap()
     this->DirectiveParser.insert(std::make_pair("host", &ConfigManager::validateHost));
     this->DirectiveParser.insert(std::make_pair("server_name", &ConfigManager::validateServerName));
     this->DirectiveParser.insert(std::make_pair("index", &ConfigManager::validateIndex));
-    this->DirectiveParser.insert(std::make_pair("client_max_body_size", &ConfigManager::validateMaxBodySize));
+    // this->DirectiveParser.insert(std::make_pair("client_max_body_size", &ConfigManager::validateMaxBodySize));
     this->DirectiveParser.insert(std::make_pair("error_page", &ConfigManager::validateErors));
 }
 

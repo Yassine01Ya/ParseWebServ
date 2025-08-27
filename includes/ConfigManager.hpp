@@ -2,9 +2,11 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stdexcept>
+#include <algorithm>
 #include "Utils.hpp"
-// class LocationHandler;
-#include "LocationHandler.hpp"
+class LocationHandler;
+// #include "LocationHandler.hpp"
 
 class ConfigManager
 {
@@ -26,7 +28,8 @@ private:
     void validateServerName(const std::vector<std::string>);
     void validateIndex(const std::vector<std::string>);
     void validateErors(const std::vector<std::string>);
-    // void validateMaxBodySize(const std::vector<std::string>);
+    // void validateTokens(const std::vector<std::string>);//Todo
+    void validateMaxBodySize(const std::vector<std::string>);
 public:
     ConfigManager();
     void validateDirective(std::string&);
